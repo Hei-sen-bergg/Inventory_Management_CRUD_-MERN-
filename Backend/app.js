@@ -9,6 +9,7 @@ const mongoose = require('mongoose');
 // var indexRouter = require('./routes/index');
 // var usersRouter = require('./routes/users');
 const categoryRoutes = require('./routes/categoyRoutes')
+const productRoutes = require('./routes/productRoutes')
 
 var app = express();
 
@@ -20,7 +21,7 @@ db.once('open', () => console.log('Connected to Database'));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -34,6 +35,7 @@ app.use(express.json());
 // app.use('/users', usersRouter);
 
 app.use('/categories', categoryRoutes);
+app.use('/products', productRoutes);
 
 
 // catch 404 and forward to error handler
