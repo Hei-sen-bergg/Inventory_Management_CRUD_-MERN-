@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-const UpdateProduct = () => {
-  const { productId } = useParams();
+const AddProduct = () => {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [barcode, setBarcode] = useState('');
   const [category, setCategory] = useState('');
   const [count, setCount] = useState('');
   const [categories, setCategories] = useState([]);
-  const navigate = useNavigate();
+
+  const navigate=useNavigate();
 
   useEffect(() => {
     fetchCategories();
-    fetchProductDetails();
   }, []);
 
   const fetchCategories = async () => {
@@ -30,33 +29,15 @@ const UpdateProduct = () => {
     }
   };
 
-  const fetchProductDetails = async () => {
-    try {
-      const response = await fetch(`/products/${productId}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch product details');
-      }
-      const data = await response.json();
-      setName(data.name);
-      setPrice(data.price);
-      setBarcode(data.barcode);
-      setCategory(data.category);
-      setCount(data.count);
-    } catch (error) {
-      console.error('Error fetching product details:', error);
-    }
-  };
-  
-
-  const handleUpdateProduct = async () => {
+  const handleAddProduct = async () => {
     try {
       const selectedCategory = categories.find(cat => cat.name === category);
       if (!selectedCategory) {
         throw new Error('Invalid category');
       }
 
-      const response = await fetch(`/products/${productId}`, {
-        method: 'PUT',
+      const response = await fetch('/products', {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -65,20 +46,20 @@ const UpdateProduct = () => {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to update product');
+        throw new Error(errorData.message || 'Failed to add product');
       }
 
-      alert('Product updated successfully');
-      navigate(`/products/category/${selectedCategory._id}`);
+      alert('Product added successfully');
+      navigate(`/products/category/${selectedCategory._id}`)
     } catch (error) {
-      console.error('Error updating product:', error);
-      alert(`Error updating product: ${error.message}`);
+      console.error('Error adding product:', error);
+      alert(`Error adding product: ${error.message}`);
     }
   };
 
   return (
     <div className="container">
-      <h1>Update Product</h1>
+      <h1>Add Product</h1>
       <Form>
         <Form.Group controlId="formProductName">
           <Form.Label>Name</Form.Label>
@@ -131,12 +112,12 @@ const UpdateProduct = () => {
             onChange={(e) => setCount(e.target.value)}
           />
         </Form.Group>
-        <Button variant="primary" onClick={handleUpdateProduct}>
-          Update
+        <Button variant="primary" onClick={handleAddProduct}>
+          Add
         </Button>
       </Form>
     </div>
   );
 };
 
-export default UpdateProduct;
+export default AddProduct;

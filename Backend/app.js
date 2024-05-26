@@ -5,13 +5,17 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 require('dotenv').config();
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 // var indexRouter = require('./routes/index');
 // var usersRouter = require('./routes/users');
-const categoryRoutes = require('./routes/categoyRoutes')
+const categoryRoutes = require('./routes/categoryRoutes')
 const productRoutes = require('./routes/productRoutes')
+const adminRoutes = require('./routes/adminRoutes');
 
 var app = express();
+
+app.use(bodyParser.json());
 
 // Connect to MongoDB
 mongoose.connect(process.env.DATABASE_URL);
@@ -36,6 +40,7 @@ app.use(express.json());
 
 app.use('/categories', categoryRoutes);
 app.use('/products', productRoutes);
+app.use('/admin', adminRoutes);
 
 
 // catch 404 and forward to error handler
@@ -54,7 +59,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

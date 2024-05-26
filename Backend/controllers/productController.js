@@ -29,15 +29,16 @@ exports.createProduct = asyncHandler(async (req, res) => {
   });
   
   // Get all products in a category
-exports.getProductsByCategory = asyncHandler(async (req, res) => {
+  exports.getProductsByCategory = async (req, res) => {
+    const { categoryId } = req.params;
     try {
-      const { categoryId } = req.params;
-      const products = await Product.find({ category: categoryId });
-      res.status(200).json(products);
+      const products = await Product.find({ category: categoryId }).populate('category', 'name');
+      res.json(products);
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      res.status(500).json({ message: 'Error fetching products', error });
     }
-  });
+  };
+  
 
   // Get a particular product
 exports.getProductById = asyncHandler(async (req, res) => {

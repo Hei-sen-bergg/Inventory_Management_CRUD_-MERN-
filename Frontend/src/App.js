@@ -1,40 +1,34 @@
-import './App.css';
-import Home from './components/Home';
-import Navbar from './components/Navbar';
-import Products from './components/Products';
-import InsertProduct from './components/InsertProduct'
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import LoginRegisterPage from './routes/LoginRegisterPage';
+import Home from './routes/Home';
+import Product from './routes/Product';
+import AddProduct from './components/AddProduct';
+import AddCategoryPage from './components/AddCategory';
+import UpdateCategoryPage from './components/UpdateCategory';
 import UpdateProduct from './components/UpdateProduct';
-import About from './components/About';
 
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route
-} from 'react-router-dom';
-
-
-
-
-function App() {
-  return (
-    <div className="App">
-      <Navbar title="Check-Mate" about="About"></Navbar>
-
+  
+  function App(fetchProducts) {
+    
+    return (
       <Router>
-        <Routes>
-          <Route exact path="/" element={<Home />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/insertproduct" element={<InsertProduct />} />
-          <Route path="/updateproduct/:id" element={<UpdateProduct />} />
-          <Route path="/about" element={<About />} />
+        <div className="App">
+          <Routes>
+            <Route path="/" element={<LoginRegisterPage />} />
+            <Route path="/home" element={<Home/>} />
+            <Route path="/add-category" element={<AddCategoryPage />} />
+            <Route path="/update-category/:categoryId" element={<UpdateCategoryPage />} />
+            <Route path="/products/category/:categoryId" element={<Product />} />
+            <Route path="/products" element={<AddProduct fetchProducts={fetchProducts}/>} />
+            <Route path="/products/:productId" element={<UpdateProduct />} />
 
-        </Routes>
-
+            
+          </Routes>
+        </div>
       </Router>
+    );
+  }
 
-
-    </div>
-  );
-}
 
 export default App;

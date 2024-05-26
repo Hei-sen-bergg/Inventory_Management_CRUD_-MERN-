@@ -1,33 +1,21 @@
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import './Navbar.css';
 
-export default function Navbar(props) {
+const Navbar = () => {
   return (
-    <div>
-      <navBar title="Check-Mate" about="About">
-        <div className="container-fluid">
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <a className="nav-link active text-white fs-4" aria-current="page" href="/">{props.title}</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link active text-white fs-4" aria-current="page" href="/products">Products</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link active text-white fs-4" aria-current="page" href="/about">About</a>
-              </li>
-            </ul>
-            <form className="d-flex" role="search">
-              <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-              <button className="btn btn-primary fs-5" type="submit">Search</button>
-            </form>
-          </div>
-        </div>
-
-        </navBar>
-    </div>
-  )
+    <nav className="navbar">
+      <div className="navbar-brand">
+        <h3>Stock Checker</h3>
+      </div>
+      <div className="navbar-links">
+        <ul>
+          <li><Link to="/categories" className="navbar-link">Categories</Link></li>
+          <li><Link to="/admin/profile" className="navbar-link">Admin Profile</Link></li>
+        </ul>
+      </div>
+    </nav>
+  );
 }
+
+export default Navbar;
