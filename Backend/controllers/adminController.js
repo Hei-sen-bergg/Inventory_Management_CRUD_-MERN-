@@ -1,5 +1,7 @@
 const Admin = require('../models/adminModel');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs')
+const asyncHandler = require('express-async-handler')
 
 // Generate JWT token
 const generateToken = (id) => {
@@ -67,3 +69,32 @@ exports.getAdminProfile = async (req, res) => {
     }
   };
   
+
+  // Get admin profile
+exports.getProfile = asyncHandler(async (req, res) => {
+  const admin = await Admin.findById(req.user.id).select('-password');
+  res.json(admin);
+});
+
+// Change admin password
+exports.changePassword = asyncHandler(async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
+
+  const admin = await Admin.findById(req.user.id);
+
+  if (!admin) {
+    res.status(404);
+    throw new Error('Admin not found');
+  }
+
+  const isMatch = await bcrypt.compare(oldPassword, admin.password);
+  if (!isMatch) {
+    res.status(400);
+    throw new Error('Old password is incorrect');
+  }
+
+  admin.password = await bcrypt.hash(newPassword, 10);
+  await admin.save();
+
+  res.status(200).json({ message: 'Password changed successfully' });
+});

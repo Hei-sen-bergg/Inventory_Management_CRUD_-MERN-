@@ -55,7 +55,7 @@ const Products = () => {
             <Card.Text>Barcode: {product.barcode}</Card.Text>
             <Card.Text>Category: {product.category.name}</Card.Text>
             <Card.Text>Count: {product.count}</Card.Text>
-            <Link to="/products/:productId" className="mr-2">
+            <Link to={`/products/${product._id}`} className="mr-2">
               <Button variant="info">Update</Button>
             </Link>
             <Button variant="danger" onClick={() => handleDelete(product._id)}>

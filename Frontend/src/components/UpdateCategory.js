@@ -37,7 +37,7 @@ const UpdateCategoryPage = ({ fetchCategories }) => {
         },
         body: JSON.stringify({ name, description }),
       });
-      navigate(`/products/category/${selectedCategory._id}`);
+      navigate(`/home`);
       
     } catch (error) {
       console.error('Error updating category:', error);

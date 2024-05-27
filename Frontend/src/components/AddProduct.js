@@ -30,6 +30,9 @@ const AddProduct = () => {
   };
 
   const handleAddProduct = async () => {
+    if(name==="" || price===""){
+      alert("All fields are required")
+    }
     try {
       const selectedCategory = categories.find(cat => cat.name === category);
       if (!selectedCategory) {
@@ -73,7 +76,7 @@ const AddProduct = () => {
         <Form.Group controlId="formProductPrice">
           <Form.Label>Price</Form.Label>
           <Form.Control
-            type="text"
+            type="number"
             placeholder="Enter product price"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
@@ -106,7 +109,7 @@ const AddProduct = () => {
         <Form.Group controlId="formProductCount">
           <Form.Label>Count</Form.Label>
           <Form.Control
-            type="text"
+            type="number"
             placeholder="Enter product count"
             value={count}
             onChange={(e) => setCount(e.target.value)}

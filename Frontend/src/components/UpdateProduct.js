@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const UpdateProduct = () => {
   const { productId } = useParams();
@@ -13,22 +13,9 @@ const UpdateProduct = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchCategories();
     fetchProductDetails();
+    fetchCategories();
   }, []);
-
-  const fetchCategories = async () => {
-    try {
-      const response = await fetch('/categories');
-      if (!response.ok) {
-        throw new Error('Failed to fetch categories');
-      }
-      const data = await response.json();
-      setCategories(data);
-    } catch (error) {
-      console.error('Error fetching categories:', error);
-    }
-  };
 
   const fetchProductDetails = async () => {
     try {
@@ -46,13 +33,24 @@ const UpdateProduct = () => {
       console.error('Error fetching product details:', error);
     }
   };
-  
+
+  const fetchCategories = async () => {
+    try {
+      const response = await fetch('/categories');
+      if (!response.ok) {
+        throw new Error('Failed to fetch categories');
+      }
+      const data = await response.json();
+      setCategories(data);
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
+  };
 
   const handleUpdateProduct = async () => {
     try {
-      const selectedCategory = categories.find(cat => cat.name === category);
-      if (!selectedCategory) {
-        throw new Error('Invalid category');
+      if (!category) {
+        throw new Error('Category is required');
       }
 
       const response = await fetch(`/products/${productId}`, {
@@ -60,7 +58,7 @@ const UpdateProduct = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name, price, barcode, category: selectedCategory._id, count }),
+        body: JSON.stringify({ name, price, barcode, category, count }),
       });
 
       if (!response.ok) {
@@ -69,7 +67,7 @@ const UpdateProduct = () => {
       }
 
       alert('Product updated successfully');
-      navigate(`/products/category/${selectedCategory._id}`);
+      navigate(`/products/category/${category}`);
     } catch (error) {
       console.error('Error updating product:', error);
       alert(`Error updating product: ${error.message}`);
@@ -92,7 +90,7 @@ const UpdateProduct = () => {
         <Form.Group controlId="formProductPrice">
           <Form.Label>Price</Form.Label>
           <Form.Control
-            type="text"
+            type="number"
             placeholder="Enter product price"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
@@ -116,7 +114,7 @@ const UpdateProduct = () => {
           >
             <option value="">Select category</option>
             {categories.map(cat => (
-              <option key={cat._id} value={cat.name}>
+              <option key={cat._id} value={cat._id}>
                 {cat.name}
               </option>
             ))}
@@ -125,7 +123,7 @@ const UpdateProduct = () => {
         <Form.Group controlId="formProductCount">
           <Form.Label>Count</Form.Label>
           <Form.Control
-            type="text"
+            type="number"
             placeholder="Enter product count"
             value={count}
             onChange={(e) => setCount(e.target.value)}

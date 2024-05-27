@@ -7,6 +7,7 @@ import AddProduct from './components/AddProduct';
 import AddCategoryPage from './components/AddCategory';
 import UpdateCategoryPage from './components/UpdateCategory';
 import UpdateProduct from './components/UpdateProduct';
+import AdminProfile from './components/AdminProfile';
 
   
   function App(fetchProducts) {
@@ -22,6 +23,7 @@ import UpdateProduct from './components/UpdateProduct';
             <Route path="/products/category/:categoryId" element={<Product />} />
             <Route path="/products" element={<AddProduct fetchProducts={fetchProducts}/>} />
             <Route path="/products/:productId" element={<UpdateProduct />} />
+            <Route path="/admin/profile" element={<AdminProfile/>} />
 
             
           </Routes>
