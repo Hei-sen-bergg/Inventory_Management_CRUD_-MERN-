@@ -8,9 +8,10 @@ const AddProduct = () => {
   const [barcode, setBarcode] = useState('');
   const [category, setCategory] = useState('');
   const [count, setCount] = useState('');
+  const [image, setImage] = useState(null); // Add state for image file
   const [categories, setCategories] = useState([]);
 
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchCategories();
@@ -29,22 +30,30 @@ const AddProduct = () => {
     }
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setImage(file);
+  };
+
   const handleAddProduct = async () => {
-    if(name==="" || price===""){
-      alert("All fields are required")
+    if (name === '' || price === '') {
+      alert('All fields are required');
+      return;
     }
     try {
-      const selectedCategory = categories.find(cat => cat.name === category);
-      if (!selectedCategory) {
-        throw new Error('Invalid category');
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('price', price);
+      formData.append('barcode', barcode);
+      formData.append('category', category);
+      formData.append('count', count);
+      if (image) {
+        formData.append('image', image); // Append image file to form data
       }
 
       const response = await fetch('http://localhost:4000/products', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name, price, barcode, category: selectedCategory._id, count }),
+        body: formData, // Send form data with image
       });
 
       if (!response.ok) {
@@ -53,7 +62,7 @@ const AddProduct = () => {
       }
 
       alert('Product added successfully');
-      navigate(`/products/category/${selectedCategory._id}`)
+      navigate(`/products`);
     } catch (error) {
       console.error('Error adding product:', error);
       alert(`Error adding product: ${error.message}`);
@@ -115,6 +124,12 @@ const AddProduct = () => {
             onChange={(e) => setCount(e.target.value)}
           />
         </Form.Group>
+
+        <Form.Group controlId="formProductImage">
+          <Form.Label>Image</Form.Label>
+          <Form.Control type="file" onChange={handleImageChange} />
+        </Form.Group>
+        
         <Button variant="primary" onClick={handleAddProduct}>
           Add
         </Button>

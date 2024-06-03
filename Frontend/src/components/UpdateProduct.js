@@ -9,6 +9,7 @@ const UpdateProduct = () => {
   const [barcode, setBarcode] = useState('');
   const [category, setCategory] = useState('');
   const [count, setCount] = useState('');
+  const [image, setImage] = useState(null); // Add state for image file
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
 
@@ -47,18 +48,30 @@ const UpdateProduct = () => {
     }
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setImage(file);
+  };
+
   const handleUpdateProduct = async () => {
     try {
       if (!category) {
         throw new Error('Category is required');
       }
 
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('price', price);
+      formData.append('barcode', barcode);
+      formData.append('category', category);
+      formData.append('count', count);
+      if (image) {
+        formData.append('image', image); // Append image file to form data
+      }
+
       const response = await fetch(`http://localhost:4000/products/${productId}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name, price, barcode, category, count }),
+        body: formData, // Send form data with image
       });
 
       if (!response.ok) {
@@ -128,6 +141,10 @@ const UpdateProduct = () => {
             value={count}
             onChange={(e) => setCount(e.target.value)}
           />
+        </Form.Group>
+        <Form.Group controlId="formProductImage">
+          <Form.Label>Image</Form.Label>
+          <Form.Control type="file" onChange={handleImageChange} />
         </Form.Group>
         <Button variant="primary" onClick={handleUpdateProduct}>
           Update

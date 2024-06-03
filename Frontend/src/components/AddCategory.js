@@ -38,7 +38,7 @@ const AddCategoryPage = () => {
 
   return (
     <div className="container">
-      <h1>Add Category</h1>
+      <h1  className='text-center'>Add Category</h1>
       <Form>
         <Form.Group controlId="formCategoryName">
           <Form.Label>Category Name</Form.Label>
@@ -65,7 +65,7 @@ const AddCategoryPage = () => {
             onChange={(e) => setImage(e.target.files[0])}
           />
         </Form.Group>
-        <Button variant="primary" onClick={handleAddCategory}>
+        <Button variant="primary" onClick={handleAddCategory} className=' mt-4'>
           Add
         </Button>
       </Form>

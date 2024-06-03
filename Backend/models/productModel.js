@@ -29,7 +29,10 @@ const productSchema = new mongoose.Schema({
   count: {
     type: Number,
     default: 0
-  }
+  },
+  image: {
+    type: String, 
+  },
 }, { timestamps: true });
 
 const Product = mongoose.model('Product', productSchema);

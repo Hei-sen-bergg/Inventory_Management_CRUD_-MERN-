@@ -49,6 +49,7 @@ const Products = () => {
       </Link>
       {products.map((product) => (
         <Card key={product._id} className="my-2">
+          <Card.Img variant="top" src={`http://localhost:4000${product.image}`} alt={product.name} />
           <Card.Body>
             <Card.Title>{product.name}</Card.Title>
             <Card.Text>Price: {product.price}</Card.Text>
