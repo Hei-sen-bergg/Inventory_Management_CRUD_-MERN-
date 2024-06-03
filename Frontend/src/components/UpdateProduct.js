@@ -19,7 +19,7 @@ const UpdateProduct = () => {
 
   const fetchProductDetails = async () => {
     try {
-      const response = await fetch(`/products/${productId}`);
+      const response = await fetch(`http://localhost:4000/products/${productId}`);
       if (!response.ok) {
         throw new Error('Failed to fetch product details');
       }
@@ -36,7 +36,7 @@ const UpdateProduct = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch('/categories');
+      const response = await fetch('http://localhost:4000/categories');
       if (!response.ok) {
         throw new Error('Failed to fetch categories');
       }
@@ -53,7 +53,7 @@ const UpdateProduct = () => {
         throw new Error('Category is required');
       }
 
-      const response = await fetch(`/products/${productId}`, {
+      const response = await fetch(`http://localhost:4000/products/${productId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

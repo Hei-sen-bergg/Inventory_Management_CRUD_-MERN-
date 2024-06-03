@@ -15,7 +15,7 @@ const AdminProfile = () => {
 
   const fetchAdminDetails = async () => {
     try {
-      const response = await fetch('/admin/profile', {
+      const response = await fetch('http://localhost:4000/admin/profile', {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -37,7 +37,7 @@ const AdminProfile = () => {
     }
 
     try {
-      const response = await fetch('/admin/change-password', {
+      const response = await fetch('http://localhost:4000/admin/change-password', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

@@ -6,10 +6,12 @@ const Category = require("../models/categoryModel")
 
 const createCategory = asyncHandler(async(req,res)=>{
     const{name,description} = req.body;
+    const image = req.file ? `/uploads/${req.file.filename}` : null;
 
     const category = new Category({
         name,
         description,
+        image
     })
     try{
         const newCategory = await category.save();
@@ -47,7 +49,7 @@ const getCategoryById = asyncHandler(async (req, res) => {
 
 
   // Update a category by ID
-const updateCategory = asyncHandler(async (req, res) => {
+  const updateCategory = asyncHandler(async (req, res) => {
     try {
       const category = await Category.findById(req.params.id);
       if (category == null) {
@@ -59,6 +61,9 @@ const updateCategory = asyncHandler(async (req, res) => {
       }
       if (req.body.description != null) {
         category.description = req.body.description;
+      }
+      if (req.file != null) {
+        category.image = `/uploads/${req.file.filename}`; // Save the path of the uploaded image
       }
   
       const updatedCategory = await category.save();

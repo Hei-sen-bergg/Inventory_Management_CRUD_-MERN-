@@ -12,7 +12,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/admin/register', { name, email, password });
+      const response = await axios.post('http://localhost:4000/admin/register', { name, email, password });
       const data = response.data;
       if (response.status === 201) {
         localStorage.setItem('token', data.token);

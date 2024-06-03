@@ -2,9 +2,17 @@
 const express = require('express');
 const router = express.Router();
 const categoryController = require('../controllers/categoryController');
+const upload = require('../middleware/multer');
+
+const fs = require('fs');
+const dir = './uploads';
+if (!fs.existsSync(dir)) {
+  fs.mkdirSync(dir);
+}
+
 
 // Create a new category
-router.post('/', categoryController.createCategory);
+router.post('/',upload.single('image'), categoryController.createCategory);
 
 // Get all categories
 router.get('/', categoryController.getAllCategories);
@@ -13,7 +21,7 @@ router.get('/', categoryController.getAllCategories);
 router.get('/:id', categoryController.getCategoryById);
 
 // Update a category by ID
-router.put('/:id', categoryController.updateCategory);
+router.put('/:id', upload.single('image'),categoryController.updateCategory);
 
 // Delete a category by ID
 router.delete('/:id', categoryController.deleteCategory);

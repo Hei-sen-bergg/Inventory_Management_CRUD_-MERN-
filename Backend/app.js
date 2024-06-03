@@ -6,6 +6,7 @@ var logger = require('morgan');
 require('dotenv').config();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 
 
@@ -16,6 +17,12 @@ const adminRoutes = require('./routes/adminRoutes');
 var app = express();
 
 app.use(bodyParser.json());
+
+app.use(cors({
+  origin: 'http://localhost:3000',
+}));
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Connect to MongoDB
 mongoose.connect(process.env.DATABASE_URL);

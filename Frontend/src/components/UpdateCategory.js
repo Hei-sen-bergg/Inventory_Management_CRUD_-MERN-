@@ -6,6 +6,7 @@ const UpdateCategoryPage = ({ fetchCategories }) => {
   const { categoryId } = useParams();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+  const [image, setImage] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -14,31 +15,34 @@ const UpdateCategoryPage = ({ fetchCategories }) => {
 
   const fetchCategoryDetails = async () => {
     try {
-      const response = await fetch(`/categories/${categoryId}`);
+      const response = await fetch(`http://localhost:4000/categories/${categoryId}`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
       setName(data.name);
       setDescription(data.description);
-    } 
-    
-    catch (error) {
+      setImage(data.image);
+    } catch (error) {
       console.error('Error fetching category details:', error);
     }
   };
 
   const handleUpdateCategory = async () => {
     try {
-      await fetch(`/categories/${categoryId}`, {
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('description', description);
+      if (image instanceof File) {
+        formData.append('image', image);
+      }
+
+      await fetch(`http://localhost:4000/categories/${categoryId}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name, description }),
+        body: formData,
       });
+
       navigate(`/home`);
-      
     } catch (error) {
       console.error('Error updating category:', error);
     }
@@ -64,6 +68,13 @@ const UpdateCategoryPage = ({ fetchCategories }) => {
             placeholder="Enter category description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group controlId="formCategoryImage">
+          <Form.Label>Category Image</Form.Label>
+          <Form.Control
+            type="file"
+            onChange={(e) => setImage(e.target.files[0])}
           />
         </Form.Group>
         <Button variant="primary" onClick={handleUpdateCategory}>

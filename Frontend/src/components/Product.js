@@ -14,7 +14,7 @@ const Products = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch(`/products/category/${categoryId}`);
+      const response = await fetch(`http://localhost:4000/products/category/${categoryId}`);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -31,7 +31,7 @@ const Products = () => {
     );
     if (confirmDelete) {
       try {
-        await fetch(`/products/${productId}`, {
+        await fetch(`http://localhost:4000/products/${productId}`, {
           method: "DELETE",
         });
         fetchProducts();

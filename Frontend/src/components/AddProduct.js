@@ -18,7 +18,7 @@ const AddProduct = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch('/categories');
+      const response = await fetch('http://localhost:4000/categories');
       if (!response.ok) {
         throw new Error('Failed to fetch categories');
       }
@@ -39,7 +39,7 @@ const AddProduct = () => {
         throw new Error('Invalid category');
       }
 
-      const response = await fetch('/products', {
+      const response = await fetch('http://localhost:4000/products', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

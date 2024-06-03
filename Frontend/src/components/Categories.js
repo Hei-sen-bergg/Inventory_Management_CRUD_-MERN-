@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Button, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-
 const Category = () => {
   const [categories, setCategories] = useState([]);
 
@@ -12,7 +11,7 @@ const Category = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch('/categories');
+      const response = await fetch('http://localhost:4000/categories');
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -27,7 +26,7 @@ const Category = () => {
     const confirmDelete = window.confirm('Are you sure you want to delete this category?');
     if (confirmDelete) {
       try {
-        await fetch(`/categories/${categoryId}`, {
+        await fetch(`http://localhost:4000/categories/${categoryId}`, {
           method: 'DELETE',
         });
         fetchCategories();
@@ -50,9 +49,14 @@ const Category = () => {
         <div key={category._id}>
           <Card className="my-2">
             <Card.Body>
-            <Link to={`/products/category/${category._id}`}>
-                {category.name}
-              </Link>
+              {category.image && (
+                <Card.Img variant="top" src={`http://localhost:4000${category.image}`} alt={category.name} />
+              )}
+              <Card.Title>
+                <Link to={`/products/category/${category._id}`}>
+                  {category.name}
+                </Link>
+              </Card.Title>
               <Card.Text>{category.description}</Card.Text>
               <Link to={`/update-category/${category._id}`} className="mr-2">
                 <Button variant="warning">Edit</Button>
