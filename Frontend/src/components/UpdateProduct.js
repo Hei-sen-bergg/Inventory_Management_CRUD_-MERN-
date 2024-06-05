@@ -53,6 +53,14 @@ const UpdateProduct = () => {
     setImage(file);
   };
 
+  const handleCountChange = (e) => {
+    const value = e.target.value;
+    // Ensure that the value is a positive number or an empty string
+    if (value === '' || (Number(value) >= 0 && /^[0-9]*$/.test(value))) {
+      setCount(value);
+    }
+  };
+
   const handleUpdateProduct = async () => {
     try {
       if (!category) {
@@ -139,7 +147,8 @@ const UpdateProduct = () => {
             type="number"
             placeholder="Enter product count"
             value={count}
-            onChange={(e) => setCount(e.target.value)}
+            onChange={handleCountChange}
+            min="0"
           />
         </Form.Group>
         <Form.Group controlId="formProductImage">

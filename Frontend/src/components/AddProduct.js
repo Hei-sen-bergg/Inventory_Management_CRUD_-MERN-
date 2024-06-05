@@ -8,7 +8,7 @@ const AddProduct = () => {
   const [barcode, setBarcode] = useState('');
   const [category, setCategory] = useState('');
   const [count, setCount] = useState('');
-  const [image, setImage] = useState(null); // Add state for image file
+  const [image, setImage] = useState(null);
   const [categories, setCategories] = useState([]);
 
   const navigate = useNavigate();
@@ -35,6 +35,14 @@ const AddProduct = () => {
     setImage(file);
   };
 
+  const handleCountChange = (e) => {
+    const value = e.target.value;
+    // Ensure that the value is a positive number or an empty string
+    if (value === '' || (Number(value) >= 0 && /^[0-9]*$/.test(value))) {
+      setCount(value);
+    }
+  };
+
   const handleAddProduct = async () => {
     if (name === '' || price === '') {
       alert('All fields are required');
@@ -48,12 +56,12 @@ const AddProduct = () => {
       formData.append('category', category);
       formData.append('count', count);
       if (image) {
-        formData.append('image', image); // Append image file to form data
+        formData.append('image', image);
       }
 
       const response = await fetch('http://localhost:4000/products', {
         method: 'POST',
-        body: formData, // Send form data with image
+        body: formData,
       });
 
       if (!response.ok) {
@@ -122,7 +130,8 @@ const AddProduct = () => {
             type="number"
             placeholder="Enter product count"
             value={count}
-            onChange={(e) => setCount(e.target.value)}
+            onChange={handleCountChange}
+            min="0" // Prevent negative values through the UI
           />
         </Form.Group>
         <Form.Group controlId="formProductImage">

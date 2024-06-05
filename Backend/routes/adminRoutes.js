@@ -7,6 +7,15 @@ const router = express.Router();
 router.post('/register', registerAdmin);
 router.post('/login', authAdmin);
 router.get('/profile', protect, getAdminProfile);
-router.put('/change-password',protect, changePassword);
+
+router.put('/changepassword', protect, async (req, res) => {
+    try {
+      await changePassword(req, res); // Pass req and res directly to the changePassword function
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 
 module.exports = router;

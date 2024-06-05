@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import './Register.css';
 
 const Register = () => {
@@ -12,22 +11,32 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:4000/admin/register', { name, email, password });
-      const data = response.data;
-      if (response.status === 201) {
+      const response = await fetch('http://localhost:4000/admin/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email, password }),
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
         localStorage.setItem('token', data.token);
         navigate('/home'); // Replace with your dashboard route
       } else {
-        alert(data.message);
+        alert(data.message || 'Failed to register. Please try again.');
       }
     } catch (error) {
       console.error('Error registering:', error);
+      alert('Failed to register. Please try again.');
     }
   };
+  
 
   return (
     <div className="register-container mb-3">
-      <h2 className='mb-4'>Register</h2>
+      <h2 className='mb-4' style={{ fontWeight: 'bold', fontSize: '50px'}}>Register</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <input

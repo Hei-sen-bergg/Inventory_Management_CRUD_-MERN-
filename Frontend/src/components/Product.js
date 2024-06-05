@@ -3,6 +3,34 @@ import { Button, Card, Row, Col } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import "./Product.css";
 
+const ProductCard = ({ product, handleDelete }) => {
+  // Function to determine if the product count is zero
+  const isCountZero = (count) => {
+    return count === 0;
+  };
+
+  return (
+    <Col key={product._id}>
+      <Card className={`fixed-card mb-3 ${isCountZero(product.count) ? 'greyscale' : ''}`}>
+        <Card.Img variant="top" src={`http://localhost:4000${product.image}`} alt={product.name} />
+        <Card.Body className="text-center">
+          <Card.Title style={{ color: '#007efc' }} className="fw-bold">{product.name}</Card.Title>
+          <Card.Text style={{ marginBottom: '5px', fontWeight: 'bold' }}>Price : ${product.price}</Card.Text>
+          <Card.Text style={{ marginBottom: '5px' }}>Barcode : {product.barcode}</Card.Text>
+          <Card.Text style={{ marginBottom: '5px' }}>Category : {product.category.name}</Card.Text>
+          <Card.Text style={{ marginBottom: '5px', fontWeight: 'bold' }}>Count: {product.count}</Card.Text>
+          <Link to={`/products/${product._id}`} className="mr-2">
+            <Button style={{ fontWeight: '500' }} variant="warning" className="mb-3">Edit</Button>
+          </Link>
+          <Button style={{ fontWeight: '500' }} variant="danger" onClick={() => handleDelete(product._id)} className="ml-2">
+            Delete
+          </Button>
+        </Card.Body>
+      </Card>
+    </Col>
+  );
+};
+
 const Products = () => {
   const { categoryId } = useParams(); // Use useParams to get categoryId from the route parameters
   const [categoryName, setCategoryName] = useState('');
@@ -27,6 +55,7 @@ const Products = () => {
       console.error('Error fetching category name:', error);
     }
   };
+
 
   const fetchProducts = async () => {
     try {
@@ -59,38 +88,20 @@ const Products = () => {
 
   return (
     <div className="container">
-      
+
       <div className='row'>
-      <div className="col-md-8  mt-3" > {/* Use Bootstrap's grid system to allocate 2/3 of the container width */}
-      <h3 >Here is the list of all products in this category "{categoryName}"</h3>
-    </div>
-      <div className='col-md-4 d-flex justify-content-end'>  
-      <Link to="/products" className="ml-auto d-flex justify-content-end">
-      <Button style={{height: '40px', marginTop: '15px'}} variant="primary">Add Product</Button>
-    </Link>
+        <div className="col-md-8  mt-3" > {/* Use Bootstrap's grid system to allocate 2/3 of the container width */}
+          <h3 style={{ textDecoration: 'none', fontSize: '30px' }}>Here is the list of all products in this "{categoryName}" category.</h3>
+        </div>
+        <div className='col-md-4 d-flex justify-content-end'>
+          <Link to="/products" className="ml-auto d-flex justify-content-end">
+            <Button style={{ height: '40px', marginTop: '15px' }} variant="primary">Add Product</Button>
+          </Link>
+        </div>
       </div>
-      </div>
-      
       <Row xs={1} md={3} className="g-4 mt-1">
         {products.map((product) => (
-          <Col key={product._id}>
-            <Card className="fixed-card">
-              <Card.Img variant="top" src={`http://localhost:4000${product.image}`} alt={product.name} />
-              <Card.Body className="text-center">
-                <Card.Title className="fw-bold">{product.name}</Card.Title>
-                <Card.Text style={{marginBottom: '5px'}}>Price: {product.price}</Card.Text>
-                <Card.Text style={{marginBottom: '5px'}}>Barcode: {product.barcode}</Card.Text>
-                <Card.Text style={{marginBottom: '5px'}}>Category: {product.category.name}</Card.Text>
-                <Card.Text style={{marginBottom: '5px'}}>Count: {product.count}</Card.Text>
-                <Link to={`/products/${product._id}`} className="mr-2">
-                  <Button variant="warning" className="mb-3">Edit</Button>
-                </Link>
-                <Button variant="danger" onClick={() => handleDelete(product._id)} className="ml-2">
-                  Delete
-                </Button>
-              </Card.Body>
-            </Card>
-          </Col>
+          <ProductCard key={product._id} product={product} handleDelete={handleDelete} />
         ))}
       </Row>
     </div>

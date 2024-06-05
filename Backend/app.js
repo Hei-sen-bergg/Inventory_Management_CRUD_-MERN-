@@ -44,6 +44,9 @@ app.use(express.json());
 
 
 
+
+
+
 app.use('/categories', categoryRoutes);
 app.use('/products', productRoutes);
 app.use('/admin', adminRoutes);

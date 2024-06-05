@@ -33,7 +33,7 @@ const Login = () => {
 
   return (
     <div className="login-container mb-3">
-      <h2 className='mb-4'>Login</h2>
+      <h2 className='mb-4' style={{ fontWeight: 'bold', fontSize: '50px'}}>Login</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <input

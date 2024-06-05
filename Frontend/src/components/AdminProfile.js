@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const AdminProfile = () => {
   const [admin, setAdmin] = useState({ name: '', email: '' });
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,19 +33,24 @@ const AdminProfile = () => {
   };
 
   const handleChangePassword = async () => {
+    if (!oldPassword || !newPassword || !confirmPassword) {
+      setError('All password fields are required');
+      return;
+    }
+
     if (newPassword !== confirmPassword) {
-      alert('New passwords do not match');
+      setError('New passwords do not match');
       return;
     }
 
     try {
-      const response = await fetch('http://localhost:4000/admin/change-password', {
+      const response = await fetch('http://localhost:4000/admin/changepassword', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
-        body: JSON.stringify({ oldPassword, newPassword }),
+        body: JSON.stringify({ oldPassword, newPassword, confirmPassword }),
       });
 
       if (!response.ok) {
@@ -52,24 +59,24 @@ const AdminProfile = () => {
       }
 
       alert('Password changed successfully');
-      navigate('/admin/profile');
+      navigate('/');
     } catch (error) {
       console.error('Error changing password:', error);
-      alert(`Error changing password: ${error.message}`);
+      setError(error.message);
     }
   };
 
   return (
-    <div className="container" style={{backgroundColor: '#F1FAFF', width: '100vh', marginTop:'5vh',borderRadius:'20px'}}>
-      <h1 className='text-center'>Admin Profile</h1>
+    <div className="container" style={{ backgroundColor: '#F1FAFF', width: '100vh', marginTop: '5vh', borderRadius: '20px' }}>
+      <h1 className='text-center' style={{ fontSize: '30px', fontWeight: '900', marginBottom: '8px' }}>Hey {admin.name} !</h1>
       <div>
-        <p><strong>Name:</strong> {admin.name}</p>
-        <p><strong>Email:</strong> {admin.email}</p>
+        <p  className='text-center' style={{ fontSize: '20px', fontWeight: '700', marginBottom: '8px' }}>This is your admin dashboard and</p>
+        <p className='text-center' style={{ fontSize: '20px', fontWeight: '500', marginBottom: '12px', }}>the email you've used to sign in is {admin.email}</p>
       </div>
-      <h4 className='text-center'>Change Password</h4>
-      <Form>
-        <Form.Group controlId="formOldPassword">
-          <Form.Label>Old Password</Form.Label>
+      <h4 className='text-center' style={{ marginBlock: '10px' }}>Would you like to change your password?</h4>
+      <Form >
+        <Form.Group controlId="formOldPassword"  style={{ marginBlock: '20px' }}>
+        
           <Form.Control
             type="password"
             placeholder="Enter old password"
@@ -77,8 +84,8 @@ const AdminProfile = () => {
             onChange={(e) => setOldPassword(e.target.value)}
           />
         </Form.Group>
-        <Form.Group controlId="formNewPassword">
-          <Form.Label>New Password</Form.Label>
+        <Form.Group controlId="formNewPassword"  style={{ marginBlock: '20px' }}>
+          
           <Form.Control
             type="password"
             placeholder="Enter new password"
@@ -86,8 +93,8 @@ const AdminProfile = () => {
             onChange={(e) => setNewPassword(e.target.value)}
           />
         </Form.Group>
-        <Form.Group controlId="formConfirmPassword">
-          <Form.Label>Confirm New Password</Form.Label>
+        <Form.Group controlId="formConfirmPassword"  style={{ marginBlock: '20px' }}>
+          
           <Form.Control
             type="password"
             placeholder="Re-enter new password"
@@ -95,10 +102,13 @@ const AdminProfile = () => {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </Form.Group>
-        <Button className=' mt-4 mb-4' variant="primary" onClick={handleChangePassword}>
+        {error && <Alert className='mt-3' variant="danger">{error}</Alert>}
+        <Button className=' mt-2 mb-4' variant="primary" onClick={handleChangePassword}>
           Confirm
         </Button>
       </Form>
+
+      <Button className=' mb-4'> <Link to="/" className="navbar-link">Logout</Link></Button>
     </div>
   );
 };
