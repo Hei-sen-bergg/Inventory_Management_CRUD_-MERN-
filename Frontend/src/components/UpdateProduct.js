@@ -88,7 +88,7 @@ const UpdateProduct = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container" style={{backgroundColor: '#F1FAFF', width: '80vh' ,borderRadius:'20px'}}>
       <h1>Update Product</h1>
       <Form>
         <Form.Group controlId="formProductName">
@@ -146,7 +146,7 @@ const UpdateProduct = () => {
           <Form.Label>Image</Form.Label>
           <Form.Control type="file" onChange={handleImageChange} />
         </Form.Group>
-        <Button variant="primary" onClick={handleUpdateProduct}>
+        <Button className='mt-3 mb-3' variant="primary" onClick={handleUpdateProduct}>
           Update
         </Button>
       </Form>

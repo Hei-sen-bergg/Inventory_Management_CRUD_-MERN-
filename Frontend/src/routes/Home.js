@@ -5,7 +5,7 @@ import Category from '../components/Categories'
 const Home = () => {
   return (
     <div>
-      <Navbar/>
+      <Navbar />
       <Category/>
     </div>
   )

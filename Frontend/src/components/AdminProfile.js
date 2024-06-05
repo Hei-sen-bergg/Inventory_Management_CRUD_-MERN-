@@ -60,13 +60,13 @@ const AdminProfile = () => {
   };
 
   return (
-    <div className="container">
-      <h1>Admin Profile</h1>
+    <div className="container" style={{backgroundColor: '#F1FAFF', width: '100vh', marginTop:'5vh',borderRadius:'20px'}}>
+      <h1 className='text-center'>Admin Profile</h1>
       <div>
         <p><strong>Name:</strong> {admin.name}</p>
         <p><strong>Email:</strong> {admin.email}</p>
       </div>
-      <h2>Change Password</h2>
+      <h4 className='text-center'>Change Password</h4>
       <Form>
         <Form.Group controlId="formOldPassword">
           <Form.Label>Old Password</Form.Label>
@@ -95,7 +95,7 @@ const AdminProfile = () => {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </Form.Group>
-        <Button variant="primary" onClick={handleChangePassword}>
+        <Button className=' mt-4 mb-4' variant="primary" onClick={handleChangePassword}>
           Confirm
         </Button>
       </Form>

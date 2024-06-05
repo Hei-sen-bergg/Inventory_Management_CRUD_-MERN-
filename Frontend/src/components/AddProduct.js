@@ -61,8 +61,9 @@ const AddProduct = () => {
         throw new Error(errorData.message || 'Failed to add product');
       }
 
+      const product = await response.json();
       alert('Product added successfully');
-      navigate(`/products`);
+      navigate(`/products/category/${product.category}`);
     } catch (error) {
       console.error('Error adding product:', error);
       alert(`Error adding product: ${error.message}`);
@@ -70,8 +71,8 @@ const AddProduct = () => {
   };
 
   return (
-    <div className="container">
-      <h1>Add Product</h1>
+    <div className="container" style={{ backgroundColor: '#F1FAFF', width: '80vh', borderRadius: '20px' }}>
+      <h3 className='text-center mt-3 mb-4'>Add a new product</h3>
       <Form>
         <Form.Group controlId="formProductName">
           <Form.Label>Name</Form.Label>
@@ -109,7 +110,7 @@ const AddProduct = () => {
           >
             <option value="">Select category</option>
             {categories.map(cat => (
-              <option key={cat._id} value={cat.name}>
+              <option key={cat._id} value={cat._id}>
                 {cat.name}
               </option>
             ))}
@@ -124,13 +125,11 @@ const AddProduct = () => {
             onChange={(e) => setCount(e.target.value)}
           />
         </Form.Group>
-
         <Form.Group controlId="formProductImage">
           <Form.Label>Image</Form.Label>
           <Form.Control type="file" onChange={handleImageChange} />
         </Form.Group>
-        
-        <Button variant="primary" onClick={handleAddProduct}>
+        <Button className="mt-4 mb-4" variant="primary" onClick={handleAddProduct}>
           Add
         </Button>
       </Form>

@@ -32,24 +32,24 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
-      <h2>Login</h2>
+    <div className="login-container mb-3">
+      <h2 className='mb-4'>Login</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="email">Email:</label>
           <input
             type="email"
             id="email"
+            placeholder='Enter your email'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
         </div>
         <div className="form-group">
-          <label htmlFor="password">Password:</label>
           <input
             type="password"
             id="password"
+            placeholder='Your password goes here'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required

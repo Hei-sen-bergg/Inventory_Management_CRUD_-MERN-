@@ -1,14 +1,15 @@
 const asyncHandler = require("express-async-handler")
-
 const Product = require('../models/productModel');
 const Category = require('../models/categoryModel');
 
 
 
 // Create a new product
-
 exports.createProduct = asyncHandler(async (req, res) => {
   try {
+    console.log('Request Body:', req.body);
+    console.log('Request File:', req.file);
+
     const { name, price, barcode, category, count } = req.body;
     const image = req.file ? `/uploads/${req.file.filename}` : null;
 
@@ -21,6 +22,7 @@ exports.createProduct = asyncHandler(async (req, res) => {
     await product.save();
     res.status(201).json(product);
   } catch (error) {
+    console.error('Error creating product:', error); // Enhanced logging
     if (error.code === 11000) { // Duplicate key error
       res.status(400).json({ message: 'Barcode must be unique.' });
     } else {
@@ -28,6 +30,7 @@ exports.createProduct = asyncHandler(async (req, res) => {
     }
   }
 });
+
 
   
   // Get all products in a category

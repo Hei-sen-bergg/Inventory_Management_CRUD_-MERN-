@@ -16,7 +16,7 @@ const productSchema = new mongoose.Schema({
     unique: true,
     validate: {
       validator: function(v) {
-        return /^[A-Za-z0-9]{12}$/.test(v);  // Ensures barcode is 12 alphanumeric characters
+        return /^[A-Za-z0-9]{12}$/.test(v);
       },
       message: props => `${props.value} is not a valid barcode! It should be exactly 12 alphanumeric characters.`
     }
@@ -31,7 +31,7 @@ const productSchema = new mongoose.Schema({
     default: 0
   },
   image: {
-    type: String, 
+    type: String,
   },
 }, { timestamps: true });
 
