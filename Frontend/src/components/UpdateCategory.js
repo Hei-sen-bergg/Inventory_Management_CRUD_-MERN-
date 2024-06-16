@@ -49,7 +49,7 @@ const UpdateCategoryPage = ({ fetchCategories }) => {
   };
 
   return (
-    <div className="container">
+    <div className="container"  style={{backgroundColor: '#F1FAFF', width: '80vh' ,borderRadius:'20px'}}>
       <h1>Update Category</h1>
       <Form>
         <Form.Group controlId="formCategoryName">
@@ -77,7 +77,7 @@ const UpdateCategoryPage = ({ fetchCategories }) => {
             onChange={(e) => setImage(e.target.files[0])}
           />
         </Form.Group>
-        <Button variant="primary" onClick={handleUpdateCategory}>
+        <Button className='mt-3 mb-3' variant="primary" onClick={handleUpdateCategory}>
           Update
         </Button>
       </Form>
