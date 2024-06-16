@@ -15,7 +15,7 @@ const UpdateCategoryPage = ({ fetchCategories }) => {
 
   const fetchCategoryDetails = async () => {
     try {
-      const response = await fetch(`http://localhost:4000/categories/${categoryId}`);
+      const response = await fetch(`https://inventory-management-crud-mern-jxwv.vercel.app/categories/${categoryId}`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -37,7 +37,7 @@ const UpdateCategoryPage = ({ fetchCategories }) => {
         formData.append('image', image);
       }
 
-      await fetch(`http://localhost:4000/categories/${categoryId}`, {
+      await fetch(`https://inventory-management-crud-mern-jxwv.vercel.app/categories/${categoryId}`, {
         method: 'PUT',
         body: formData,
       });

@@ -11,7 +11,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:4000/admin/register', {
+      const response = await fetch('https://inventory-management-crud-mern-jxwv.vercel.app/admin/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

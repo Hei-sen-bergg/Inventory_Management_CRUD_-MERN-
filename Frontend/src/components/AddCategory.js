@@ -20,7 +20,7 @@ const AddCategoryPage = () => {
       formData.append('description', description);
       if (image) formData.append('image', image);
 
-      const response = await fetch('http://localhost:4000/categories', {
+      const response = await fetch('https://inventory-management-crud-mern-jxwv.vercel.app/categories', {
         method: 'POST',
         body: formData,
       });

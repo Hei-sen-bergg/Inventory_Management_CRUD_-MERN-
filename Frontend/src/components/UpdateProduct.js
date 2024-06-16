@@ -20,7 +20,7 @@ const UpdateProduct = () => {
 
   const fetchProductDetails = async () => {
     try {
-      const response = await fetch(`http://localhost:4000/products/${productId}`);
+      const response = await fetch(`https://inventory-management-crud-mern-jxwv.vercel.app/products/${productId}`);
       if (!response.ok) {
         throw new Error('Failed to fetch product details');
       }
@@ -37,7 +37,7 @@ const UpdateProduct = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch('http://localhost:4000/categories');
+      const response = await fetch('https://inventory-management-crud-mern-jxwv.vercel.app/categories');
       if (!response.ok) {
         throw new Error('Failed to fetch categories');
       }
@@ -77,7 +77,7 @@ const UpdateProduct = () => {
         formData.append('image', image); // Append image file to form data
       }
 
-      const response = await fetch(`http://localhost:4000/products/${productId}`, {
+      const response = await fetch(`https://inventory-management-crud-mern-jxwv.vercel.app/products/${productId}`, {
         method: 'PUT',
         body: formData, // Send form data with image
       });

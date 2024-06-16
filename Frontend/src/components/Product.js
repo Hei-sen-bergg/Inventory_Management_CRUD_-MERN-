@@ -12,7 +12,7 @@ const ProductCard = ({ product, handleDelete }) => {
   return (
     <Col key={product._id}>
       <Card className={`fixed-card mb-3 ${isCountZero(product.count) ? 'greyscale' : ''}`}>
-        <Card.Img variant="top" src={`http://localhost:4000${product.image}`} alt={product.name} />
+        <Card.Img variant="top" src={`https://inventory-management-crud-mern-jxwv.vercel.app/${product.image}`} alt={product.name} />
         <Card.Body className="text-center">
           <Card.Title style={{ color: '#007efc' }} className="fw-bold">{product.name}</Card.Title>
           <Card.Text style={{ marginBottom: '5px', fontWeight: 'bold' }}>Price : ${product.price}</Card.Text>
@@ -45,7 +45,7 @@ const Products = () => {
 
   const fetchCategoryName = async () => {
     try {
-      const response = await fetch(`http://localhost:4000/categories/${categoryId}`);
+      const response = await fetch(`https://inventory-management-crud-mern-jxwv.vercel.app/categories/${categoryId}`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -59,7 +59,7 @@ const Products = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch(`http://localhost:4000/products/category/${categoryId}`);
+      const response = await fetch(`https://inventory-management-crud-mern-jxwv.vercel.app/products/category/${categoryId}`);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -76,7 +76,7 @@ const Products = () => {
     );
     if (confirmDelete) {
       try {
-        await fetch(`http://localhost:4000/products/${productId}`, {
+        await fetch(`https://inventory-management-crud-mern-jxwv.vercel.app/products/${productId}`, {
           method: "DELETE",
         });
         fetchProducts();

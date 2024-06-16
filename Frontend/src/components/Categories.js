@@ -14,7 +14,7 @@ const Category = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch('http://localhost:4000/categories');
+      const response = await fetch('https://inventory-management-crud-mern-jxwv.vercel.app/categories');
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -29,7 +29,7 @@ const Category = () => {
     const confirmDelete = window.confirm('Are you sure you want to delete this category?');
     if (confirmDelete) {
       try {
-        await fetch(`http://localhost:4000/categories/${categoryId}`, {
+        await fetch(`https://inventory-management-crud-mern-jxwv.vercel.app/categories/${categoryId}`, {
           method: 'DELETE',
         });
         fetchCategories();
@@ -64,7 +64,7 @@ const Category = () => {
         {categories.map((category) => (
           <Col key={category._id}>
             <Card className='fixed-card mb-3'>
-              <Card.Img variant="top" src={`http://localhost:4000${category.image}`} alt={category.name} />
+              <Card.Img variant="top" src={`https://inventory-management-crud-mern-jxwv.vercel.app/${category.image}`} alt={category.name} />
               <Card.Body className="text-center">
               <Link to={`/products/category/${category._id}`} style={{ fontWeight: 'bold' , textDecoration:'none', fontSize:'25px'}}>
                   {category.name}

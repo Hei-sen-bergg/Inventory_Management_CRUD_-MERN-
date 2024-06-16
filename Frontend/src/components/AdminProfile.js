@@ -17,7 +17,7 @@ const AdminProfile = () => {
 
   const fetchAdminDetails = async () => {
     try {
-      const response = await fetch('http://localhost:4000/admin/profile', {
+      const response = await fetch('https://inventory-management-crud-mern-jxwv.vercel.app/admin/profile', {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -44,7 +44,7 @@ const AdminProfile = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:4000/admin/changepassword', {
+      const response = await fetch('https://inventory-management-crud-mern-jxwv.vercel.app/admin/changepassword', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

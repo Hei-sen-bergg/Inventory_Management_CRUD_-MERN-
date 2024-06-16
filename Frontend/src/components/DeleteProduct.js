@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 const DeleteProduct = ({ productId, fetchProducts }) => {
   const handleDeleteProduct = async () => {
     try {
-      await fetch(`http://localhost:4000/products/${productId}`, {
+      await fetch(`https://inventory-management-crud-mern-jxwv.vercel.app/products/${productId}`, {
         method: 'DELETE',
       });
       fetchProducts();
